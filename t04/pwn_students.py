@@ -15,6 +15,4 @@ def extract_flag_from_string(string):
 with requests.Session() as sess:
     final_query = URL + QUERY
     response = sess.get(final_query)
-    for line in response.text.splitlines():
-        flag = extract_flag_from_string(line)
-        if(flag): print(flag)
+    print(extract_flag_from_string(response.text))
