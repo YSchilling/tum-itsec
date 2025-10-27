@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<b>Your account 65419302:</b>
+<table>
+<tr>
+<th>Date</th>
+<th>Receiver/Sender</th>
+<th>Transaction Description</th>
+<th>Amount</th>
+</tr>
+<tr>
+<td>01.10.2024</td>
+<td>Fabian Franzen</td>
+<td>Plz give me 1.0 in the exam!</td>
+<td><font color="red">-1337.0 €</font></td>
+</tr>
+<tr>
+<td>02.10.2024</td>
+<td>Fabian Franzen</td>
+<td>Nope! Plz learn more!</td>
+<td>+1337.0 €</td>
+</tr>
+</table>
+<div id="balance"><b>Balance: {{amount}}€</b></div>
+
+<br>
+<a href="/logout">Logout</a><br>
+Any problem with our site? Check out our <a href="/help?ln=English">Online Help</a> or <a href="/contact">Contact our admin</a> if you have questions!
+{% endblock %}

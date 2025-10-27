@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+Any problem with our service? Our admin will be happy to assist you.
+<form method="post" action="/contact">
+<textarea name="contacttext" rows="8" cols="90"></textarea>
+<br>
+<input type="submit" value="Send">
+</form>
+{% endblock %}
