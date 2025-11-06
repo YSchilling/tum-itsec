@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <form class="col" method="post">
+      <input type="text" name="username" placeholder="Username" value="{{ data.username }}">
+      <input type="password" name="password" placeholder="New password (or empty)">
+      <input class="mono" type="text" name="picture" placeholder="Profile picture URL" value="{{ data.picture }}">
+      <div class="row right-row">
+        <form class="inline"><button type="submit">Cancel</button></form>
+        <button type="submit">Change</button>
+      </div>
+    </form>
+{% endblock %}

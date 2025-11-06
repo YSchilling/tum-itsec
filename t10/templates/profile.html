@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col">
+  <div class="row">
+	<div class="pfp">
+	  <img src="{{ data.picture }}">
+	</div>
+	<p class="right">{{ data.username }}<br><a href="/edit">Edit profile</a><br><a href="/logout">Log out</a></p>
+  </div>
+  <p class="grade">{{ data.grade }}</p>
+  {% if flag %}
+	<p class="flag">{{ flag }}</p>
+  {% else %}
+	<p class="flag">Sorry, your grade is not good enough to get a flag<br><a href="/complain">Make a complaint</a></p>
+  {% endif %}
+</div>
+{% endblock %}
