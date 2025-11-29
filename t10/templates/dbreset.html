@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<p>This task has a stateful database attached to it containing all data for the registered users.
+You can reset the database back to its initial state by clicking on the button below.</p>
+
+<form method="post"> 
+	<input type="submit" value="Yes, I want revert my personal database to the intitial state!">
+</form>
+{% endblock %}

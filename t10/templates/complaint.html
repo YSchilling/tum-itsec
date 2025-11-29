@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="col">
+      <div class="row">
+        <div class="pfp">
+          <img src="{{ data.picture }}">
+        </div>
+        <p class="right">{{ data.username }}<br><a href="/edit">Edit profile</a><br><a href="/logout">Log out</a></p>
+      </div>
+      <form class="col sp-pre" method="post">
+        <textarea name="complaint" placeholder="Please explain your complaint" required></textarea>
+        <button type="submit">Submit complaint</button>
+      </form>
+    <div>
+{% endblock %}

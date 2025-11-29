@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <form class="col" method="post">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Log in</button>
+    </form>
+    <a href="/register">No account? Register now!</a>
+	<p><a href="/reset">Start again? Reset the database here!</a></p>
+{% endblock %}
