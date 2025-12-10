@@ -86,13 +86,17 @@ if __name__ == "__main__":
                 raw_message_a = decrypted_message_a[:-32]
                 mac = decrypted_message_a[-32:]
                 print("Message A -> B:", raw_message_a)
-                side_b.write("{}\n".format(encrypt(raw_message_a, mac, key_b)))
+                side_b.write("{}\n".format(encrypt(raw_message_a, mac, key_b).hex().encode() + b"\n"))
                 side_b.flush()
 
+            break
             if side_b:
                 message_b = side_b.readline().strip()
-                print("Message B -> A:", decrypt(bytes.fromhex(message_b), key_b))
-                side_a.write("{}\nn".format(message_b))
+                decrypted_message_b = decrypt(bytes.fromhex(message_b), key_b)
+                raw_message_b = decrypted_message_b[:-32]
+                mac = decrypted_message_b[-32:]
+                print("Message B -> A:", raw_message_b)
+                side_a.write("{}\n".format(encrypt(raw_message_b, mac, key_a)))
                 side_a.flush()
 
         # You may find these hints useful:
