@@ -3,6 +3,7 @@ import requests
 import string
 import itertools
 import hashlib
+import htpasswdlib
 
 URL = "https://t16-e903940d62c9a6c1.itsec.sec.in.tum.de"
 
@@ -26,7 +27,7 @@ def base64_decode(h: str):
 
 def sha1_hash(username, password):
     sha1_hash = hashlib.sha1(password.encode()).digest()
-    encoded_sha1_hash = base64_encode(sha1_hash, sha1_basis_64)
+    encoded_sha1_hash = htpasswdlib.base64_encode(sha1_hash, sha1_basis_64)
     return f"{username}:{{SHA}}{encoded_sha1_hash}"
 
 # Returns only the flag if there is one in the passed string, otherwise returns None

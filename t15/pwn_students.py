@@ -2,9 +2,7 @@
 
 import requests
 import re
-import bitarray
 
-from t15.app import randgen_xorshift32
 
 #TODO Change to your personal URL from the Scoreboard
 URL = "https://t15-bfd6cf936fd8b844.itsec.sec.in.tum.de"
