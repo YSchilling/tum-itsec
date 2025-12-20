@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flag Safe - Powered by AISECure biometrics!</title>
+        <link rel="stylesheet" href="/static/pico.min.css">
+    </head>
+    <body>
+        <main class="container">
+            <header>
+                <h1>Flag Safe</h1>
+                <h3>Powered by AISECure</h3>
+            </header>
+            <div id="contentbox">
+                <img src="static/sicher.jpg" width="300px" style="margin-bottom: 2em;">
+                <p>
+                    You are using our patented <em>flag safe (TM) software</em> for the secure storage of IT security lecture flags. Due to all the hassles passwords bring with them, we updated to a new biometric face id approach!
+                </p>
+                <p>
+                    Please login to view your flag!
+                    Take a picture of yourself and submit it to authenticate yourself! Be prepared to use your webcam!
+                </p>
+
+                <p><b>Privacy Note:</b> We will delete your image after any authentication attempt. It is <b>not</b> logged or saved!</p>
+
+                <button id="login">Login using (In)secure FaceID!</button>
+
+                <div id="login-form" style="display: none;">
+                    <div id="msg"></div>
+                    <video style="display: block;">
+                    </video>
+                    <canvas style="display: none"></canvas>
+                    <button style="margin-top: 1em">Take pic for login!</button>
+                </div>
+            </div>
+            <template id="success">
+                <p>
+                    Welcome <b>Secret User</b>!
+                </p>
+                <p>
+                    Your flag is: %FLAG%
+                </p>
+            </template>
+        </main>
+    </body>
+    <script>
+        let videoTag = document.querySelector("#login-form > video");
+        let takePic = document.querySelector("#login-form > button");
+        let can = document.querySelector("#login-form > canvas");
+        let login = document.querySelector("#login");
+        let tmpl = document.querySelector("#login-form");
+        let contentbox = document.querySelector("#contentbox")
+        login.addEventListener("click", (ev) => {
+            tmpl.style.display="block";
+            login.style.display="none";
+
+            if(navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({video: true}).then((s) => {
+                    videoTag.srcObject = s;
+                    videoTag.play();
+                }).catch((err) => {
+                    console.log(err);
+                    alert("Something went wrong!");
+                })
+            }
+            ev.preventDefault();
+        });
+        takePic.addEventListener("click", (ev) => {
+            const context = can.getContext("2d");
+            can.width = videoTag.videoWidth;
+            can.height = videoTag.videoHeight;
+            context.drawImage(videoTag, 0, 0, videoTag.videoWidth, videoTag.videoHeight);
+            document.querySelector("#msg").innerHTML = '<div style="border: 3px solid #694D00; border-radius: 5px; padding: 3px 10px; background-color: #FFBF00; color: white; margin-bottom: 5px;"><b>Checking your pic...</b></div>';
+            videoTag.style.display = "none";
+            can.style.display = "block";
+
+            can.toBlob((data) => {
+                fetch("/login", {
+                    method: "POST", 
+                    headers: {
+                        "Content-Type": "image/png",
+                    },
+                    body: data})
+                    .then((r) => r.json())
+                    .then((json) => {
+                        if("error" in json) {
+                            document.querySelector("#msg").innerHTML = `<div style="border: 3px solid #861D13; border-radius: 5px; padding: 3px 10px; background-color: #D93526; color: white; margin-bottom: 5px;"><b>${json["error"]}</b></div>`;
+                            videoTag.style.display = "block";
+                            can.style.display = "none";
+                        } else {
+                            contentbox.replaceChildren(document.importNode(document.querySelector("#success").content, true));
+                            contentbox.innerHTML = contentbox.innerHTML.replace("%FLAG%", json['flag']);
+                        }
+                    })
+            });
+            ev.preventDefault();
+        }, false);
+    </script>
+</html>
