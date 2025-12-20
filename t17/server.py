@@ -99,7 +99,7 @@ async def handle_request(reader, writer):
         key = kdf_aes(s)
         print(f"{connection_id}: AES key is {key.hex()}")
 
-        flag = subprocess.check_output("/bin/flag").strip()
+        flag = r"flag{1234567890}" #subprocess.check_output("/bin/flag").strip()
 
         # We want to force an adversary into a MitM position, so the flag
         # is actually split across messages.
