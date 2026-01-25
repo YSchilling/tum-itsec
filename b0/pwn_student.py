@@ -1,7 +1,6 @@
 import requests
 import io
 from PIL import Image, ImageFilter, ImageChops, ImageEnhance
-import numpy as np
 
 def main():
     URL = "https://b0-ca3cf5aeca0e42d2.itsec.sec.in.tum.de/"
@@ -9,7 +8,6 @@ def main():
 
     img = Image.open(IMG_URL, "r")
     reference_image = Image.open(IMG_URL, "r")
-    reference_array = np.array(reference_image)
 
     modified_img = img.convert("L").convert("RGB")
     modified_img = ImageChops.offset(modified_img, -64, 128)
